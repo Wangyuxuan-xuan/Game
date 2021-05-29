@@ -68,7 +68,7 @@ public class GameController {
         public StackPane createRectangle(Color color){
             StackPane rectangle = new StackPane();
             rectangle.getStyleClass().add("rectangle");
-            var ball = new Rectangle(40,150);
+            var ball = new Rectangle(45,150);
             ball.setFill(color);
             rectangle.getChildren().add(ball);
             rectangle.setOnMouseClicked(this::handleMouseClicked);
