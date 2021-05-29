@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 
 import java.util.Date;
 
-
 /**
  * A player entity class,
  * Includes the player's name, game start time, game end time, number of moves and final score.
@@ -47,15 +46,15 @@ public class Player {
     }
 
     /**
-     * Gain game time,
-     * @return endTime.getSeconds() - startTime.getSeconds().
+     * Get the total game time
+     * @return the total game time
      */
     public int getSeconds() {
         return (int) (endTime.getTime()- startTime.getTime())/1000;
     }
 
     /**
-     * player's name,
+     * Get player's name,
      * @return playerName.
      */
     public String getPlayerName() {
@@ -63,7 +62,7 @@ public class Player {
     }
 
     /**
-     * set the name of player,
+     * Set the name of player,
      * @param playerName the name of player.
      */
     public void setPlayerName(String playerName) {
@@ -71,7 +70,7 @@ public class Player {
     }
 
     /**
-     * number of moves,
+     * Get the number of moves,
      * @return number of moves.
      */
     public int getCount() {
@@ -79,7 +78,7 @@ public class Player {
     }
 
     /**
-     * set number of moves,
+     * Set number of moves,
      * @param count number of moves.
      */
     public void setCount(int count) {
@@ -87,7 +86,7 @@ public class Player {
     }
 
     /**
-     * the start time of the game,
+     * Get the start time of the game,
      * @return startTime.
      */
     public Date getStartTime() {
@@ -95,7 +94,7 @@ public class Player {
     }
 
     /**
-     * set the start time of the game,
+     * Set the start time of the game,
      * @param startTime startTime.
      */
     public void setStartTime(Date startTime) {
@@ -103,7 +102,7 @@ public class Player {
     }
 
     /**
-     * the end time of the game,
+     * Get the end time of the game,
      * @return end Time.
      */
     public Date getEndTime() {
@@ -111,7 +110,7 @@ public class Player {
     }
 
     /**
-     * the end time of the game,
+     * Set the end time of the game,
      * @param endTime end time.
      */
     public void setEndTime(Date endTime) {
@@ -119,8 +118,8 @@ public class Player {
     }
 
     /**
-     * Converts the class to GSON data and returns it,
-     * @return GSON Data of this object.
+     * Converts the class to JSON data ,
+     * @return JSON Data of this object.
      */
     @Override
     public String toString() {

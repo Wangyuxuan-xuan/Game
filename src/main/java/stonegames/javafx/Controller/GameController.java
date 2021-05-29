@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -36,10 +35,7 @@ public class GameController {
     @FXML
     private GridPane board;
     private static String playerName;
-    private Button buttons[] = new Button[6];
-    private StackPane rectangles [] = new StackPane[16];
     private GameModel model =  new GameModel();
-    private static boolean drugClick = false;
     private static ArrayList<Integer> clickedButtonsLocations = new ArrayList<Integer>();
     private static ArrayList<Rectangle> clickedButtons = new ArrayList<Rectangle>();
 

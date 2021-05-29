@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-
 /**
- * A Gson read and write utility class.
+ * Read and write the game date to Json file
  */
 public class WriteToGson implements Comparator<Player> {
 
 
     /**
-     * save game data,
+     * Save the data of the game and player
+     *
      * @param player player,
-     * '@throws' IOException.
+     * @throws IOException In case of failed or interrupted I/O operations.
      */
     public void saveData(Player player) throws IOException {
         try {
@@ -34,18 +34,14 @@ public class WriteToGson implements Comparator<Player> {
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }//write to the end
-
-
-        /*FileWriter fileWriter = new FileWriter("GameData.json");
-
-        gson.toJson(player,fileWriter);*/
+        }
     }
 
     /**
-     * Returns the top ten data in the GSON data,
+     * Reads the top ten player data for Json file
+     *
      * @return List<Player>,
-     * '@throws' IOException.
+     * @throws IOException In case of failed or interrupted I/O operations.
      */
     public static List<Player> findTop10Player() throws IOException {
 
@@ -63,40 +59,25 @@ public class WriteToGson implements Comparator<Player> {
             top10Players.sort((o1, o2) -> o2.getScore()-o1.getScore());
             Logger.info("top10Players:"+top10Players);
             return top10Players;
-            //top10Players.sort(new Comparator<Player>(){
-
-                    /*
-                    @Override
-                    public int compare(Player player1,Player player2){
-                        return player1.getScore().compareTo.player2.getScore();
-                    }
-                });   */
-
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
-        //return top10Players;
         return null;
     }
 
     /**
      * Compare two players by their scores,
+     *
      * @param o1 player1,
      * @param o2 player2,
      * @return score.
      */
-
-
     @Override
     public int compare(Player o1, Player o2) {
         // TODO Auto-generated method stub
         return o1.getScore()-o2.getScore();
     }
-
-    //@Override
 
 }

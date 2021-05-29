@@ -1,4 +1,4 @@
 /**
- * Provide a method output the data to a gson file.
+ * Provide a method output and read the data to a Json file.
  */
 package stonegames.results;
