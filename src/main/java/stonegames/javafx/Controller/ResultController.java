@@ -1,4 +1,4 @@
-package stonegames.javafx.controller;
+package stonegames.javafx.Controller;
 
 
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package stonegames.javafx.controller;
+package stonegames.javafx.Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.tinylog.Logger;
+import stonegames.javafx.Controller.GameController;
 
 import javax.inject.Inject;
 import java.io.IOException;
