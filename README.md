@@ -10,8 +10,10 @@ Welcome to the Red and Black Stone Game
 - Then congratulation!
 - You win the game.
 
-## Notice On Moving stones
-When choosing the stones to move , please make sure you choose two neighbour stones
+## Tips On Moving stones
+When choosing the stones to move ,
+choose two neighbour stones with two clicks 
+Then please them into two empty boxes with two clicks as well.
 
 ## Run
 
