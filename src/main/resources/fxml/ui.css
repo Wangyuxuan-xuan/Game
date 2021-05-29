@@ -1,0 +1,7 @@
+.rectangle {
+    -fx-border-style: solid;
+}
+
+.rectangle:hover {
+    -fx-background-color: whitesmoke;
+}
