@@ -43,11 +43,7 @@ public class GameController {
     private static ArrayList<Integer> clickedButtonsLocations = new ArrayList<Integer>();
     private static ArrayList<Rectangle> clickedButtons = new ArrayList<Rectangle>();
 
-    private static Button movingBallButton1;
-    private static Button movingBallButton2;
     private static int countMove = 0;
-    static boolean canMove = false;
-    static boolean isChoosingBall = true;
     static boolean isSuccess = true;
     int oldLocation1;
     int oldLocation2;
@@ -110,8 +106,7 @@ public class GameController {
                     if (model.locationsDontContainBalls(desiredLocation1, desiredLocation2) && model.isBallsNeighbour(desiredLocation1, desiredLocation2)) {
                         model.setBallsLocation(oldLocation1, oldLocation2, desiredLocation1, desiredLocation2);
                         Logger.debug("New locations for the balls have been set");
-//                    var coin = (Rectangle) rectangle.getChildren().get(0);
-//                    coin.setFill(Color.RED);
+
                         setBallsColor(clickedButtons.get(0), clickedButtons.get(1), clickedButtons.get(2), clickedButtons.get(3));
                         Logger.debug(model);
                         isSuccess = model.isGameComplete();
