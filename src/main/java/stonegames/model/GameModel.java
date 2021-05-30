@@ -8,6 +8,7 @@ public class GameModel {
      */
     public Box boxes[];
 
+    BallColor oldLocationColor1 , oldLocationColor2;
     /**
      * Creates a {@code GameModel} object that is initialized it with
      * the array boxes.
@@ -24,6 +25,20 @@ public class GameModel {
         for (int i = 6; i < 16; i++) {
             boxes[i] = new Box((BallColor.NONE));
         }
+    }
+
+    public void setBallsToNone(int oldLocation1, int oldLocation2){
+        if(!locationsDontContainBalls(oldLocation1,oldLocation2)){
+            oldLocationColor1 = boxes[oldLocation1].getColor();
+            oldLocationColor2 = boxes[oldLocation2].getColor();
+            boxes[oldLocation1].setColor(BallColor.NONE);
+            boxes[oldLocation2].setColor(BallColor.NONE);
+        }else Logger.debug("empty boxes are clicked");
+    }
+
+    public void resetBallsColor(int oldLocation1, int oldLocation2){
+        boxes[oldLocation1].setColor(oldLocationColor1);
+        boxes[oldLocation2].setColor(oldLocationColor2);
     }
     /**
      *Move the balls from original location to a new location
@@ -42,13 +57,8 @@ public class GameModel {
             }
             else{
                 if (locationsDontContainBalls(newLocation1, newLocation2)){
-                    BallColor color1, color2;
-                    color1 = boxes[oldLocation1].getColor();
-                    color2 = boxes[oldLocation2].getColor();
-                    boxes[oldLocation1].setColor(BallColor.NONE);
-                    boxes[oldLocation2].setColor(BallColor.NONE);
-                    boxes[newLocation1].setColor(color1);
-                    boxes[newLocation2].setColor(color2);
+                    boxes[newLocation1].setColor(oldLocationColor1);
+                    boxes[newLocation2].setColor(oldLocationColor2);
                     Logger.debug("Successful Move");
                     if(isGameComplete()) {
                         Logger.debug("Game Complete");
@@ -113,14 +123,16 @@ public class GameModel {
      */
     public boolean isGameComplete() {
         for (int i = 0; i < 16; i++) {
-            if (i > 5 && !(boxes[i].getColor().equals(BallColor.NONE))) {
-                return false;
-            }
-            if (i < 3 && !(boxes[i].getColor().equals(BallColor.RED))) {
-                return false;
+            if(boxes[i].getColor().equals(BallColor.RED)){
+                return boxes[i].getColor().equals(BallColor.RED) &&
+                        boxes[i + 1].getColor().equals(BallColor.RED) &&
+                        boxes[i + 2].getColor().equals(BallColor.RED) &&
+                        boxes[i + 3].getColor().equals(BallColor.BLACK) &&
+                        boxes[i + 4].getColor().equals(BallColor.BLACK) &&
+                        boxes[i + 5].getColor().equals(BallColor.BLACK);
             }
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -136,13 +148,17 @@ public class GameModel {
 
     public static void main(String[] args) {
         GameModel model = new GameModel();
+        model.setBallsToNone(1,2);
         model.setBallsLocation(1,2,6,7);
+        model.setBallsToNone(5,6);
         model.setBallsLocation(5,6, 1,2);
+        model.setBallsToNone(3,4);
         model.setBallsLocation(3,4, 5,6);
+        model.setBallsToNone(1,2);
         model.setBallsLocation(1,2, 3,4);
+        model.setBallsToNone(6,7);
         model.setBallsLocation(6,7, 1,2);
         System.out.println(model);
-
 
     }
 }

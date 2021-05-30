@@ -1,6 +1,7 @@
 package stonegames.model;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Date;
 
@@ -123,6 +124,7 @@ public class Player {
      */
     @Override
     public String toString() {
-        return new Gson().toJson(this);
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson(this);
     }
 }

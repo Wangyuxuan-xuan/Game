@@ -1,6 +1,7 @@
 package stonegames.results;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.tinylog.Logger;
 import stonegames.model.Player;
 
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Read and write the game date to Json file
  */
-public class WriteToGson implements Comparator<Player> {
+public class GameResult implements Comparator<Player> {
 
 
     /**
@@ -24,6 +25,7 @@ public class WriteToGson implements Comparator<Player> {
      */
     public void saveData(Player player) throws IOException {
         try {
+
             File file=new File("GameData.json");
 
             FileOutputStream fileOutputStream = new FileOutputStream(file, true);
@@ -31,10 +33,24 @@ public class WriteToGson implements Comparator<Player> {
             fileOutputStream.write(player.toString().getBytes());
             fileOutputStream.write("\r\n".getBytes());
             fileOutputStream.close();
+
+
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Player player = new Player();
+        player.setPlayerName("aaa");
+        player.setCount(6);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        FileWriter writer = new FileWriter("GameData.json",true);
+        gson.toJson(player, writer);
+
+        System.out.println(gson.fromJson(new FileReader("GameData.json"), Player.class));
     }
 
     /**

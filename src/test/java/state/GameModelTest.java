@@ -64,14 +64,19 @@ public class GameModelTest {
     public void testIsGameComplete(){
         GameModel gameModel = new GameModel();
         assertTrue(gameModel.isGameComplete() == false);
+        gameModel.setBallsToNone(1,2);
         gameModel.setBallsLocation(1,2,6,7);
         assertTrue(gameModel.isGameComplete() == false);
+        gameModel.setBallsToNone(5,6);
         gameModel.setBallsLocation(5,6, 1,2);
         assertTrue(gameModel.isGameComplete() == false);
+        gameModel.setBallsToNone(3,4);
         gameModel.setBallsLocation(3,4, 5,6);
         assertTrue(gameModel.isGameComplete() == false);
+        gameModel.setBallsToNone(1,2);
         gameModel.setBallsLocation(1,2, 3,4);
         assertTrue(gameModel.isGameComplete() == false);
+        gameModel.setBallsToNone(6,7);
         gameModel.setBallsLocation(6,7, 1,2);
         assertTrue(gameModel.isGameComplete() == true);
     }
