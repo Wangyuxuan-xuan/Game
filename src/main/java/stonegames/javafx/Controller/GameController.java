@@ -95,13 +95,20 @@ public class GameController {
                 oldLocation1 = clickedButtonsLocations.get(0);
                 oldLocation2 = clickedButtonsLocations.get(1);
 
-                if (model.locationsDontContainBalls(oldLocation1, oldLocation2) || !model.isBallsNeighbour(oldLocation1, oldLocation2) || model.oneLocationDoesNotContainBall(oldLocation1,oldLocation2)){
+                if(oldLocation1 < oldLocation2 ){
+                    if (model.locationsDontContainBalls(oldLocation1, oldLocation2) || !model.isBallsNeighbour(oldLocation1, oldLocation2) || model.oneLocationDoesNotContainBall(oldLocation1,oldLocation2)){
+                        clickedButtonsLocations = new ArrayList<>();
+                        clickedButtons = new ArrayList<>();
+                        Logger.debug("Your selected locations don't contain balls or selected locations are not neighbor");
+                    }else {
+                        model.setBallsToNone(oldLocation1,oldLocation2);
+                    }
+                }else {
                     clickedButtonsLocations = new ArrayList<>();
                     clickedButtons = new ArrayList<>();
-                    Logger.debug("Your selected locations don't contain balls or selected locations are not neighbor");
-                }else {
-                    model.setBallsToNone(oldLocation1,oldLocation2);
+                    Logger.debug("Please select stones from left to right");
                 }
+
             }
             if (clickedButtonsLocations.size() == 3) {
                 var desiredLocation1 = clickedButtonsLocations.get(2);
