@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stonegames.javafx.Controller.ResultController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stonegames.javafx.Controller.ResultController">
     <children>
-
-        <Label fx:id="myScoreLabel" layoutX="82.0" layoutY="17.0">54
+        <TableView fx:id="highScoreTable" layoutX="50.0" layoutY="50.0" prefHeight="500.0" prefWidth="500.0">
+            <columns>
+                <TableColumn fx:id="winnerName" prefWidth="110.4000244140625" text="Name" />
+                <TableColumn fx:id="TotalMoves" prefWidth="131.99993896484375" text="Total Moves" />
+            <TableColumn fx:id="Duration" maxWidth="124.0" prefWidth="117.5999755859375" text="Duration(sec)" />
+            <TableColumn fx:id="Score" maxWidth="161.5999755859375" prefWidth="138.4000244140625" text="Score" />
+            </columns>
+        </TableView>
+        <ButtonBar layoutX="214.0" layoutY="550.0" prefHeight="46.0" prefWidth="173.0">
+            <buttons>
+                <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="30.0" prefWidth="80.0" text="Exit" />
+            </buttons>
+        </ButtonBar>
+        <Label layoutX="209.0" layoutY="14.0" text="High Score Board" textFill="#2dcbc6">
             <font>
-                <Font name="MathJax_Main-Bold" size="16.0" />
+                <Font name="System Bold" size="25.0" />
             </font>
         </Label>
-        <TextArea fx:id="textArea" layoutX="82.0" layoutY="54.0" prefHeight="224.0" prefWidth="462.0">
-            <font>
-                <Font name="MathJax_Main-Bold" size="16.0" />
-            </font>
-        </TextArea>
-        <Button fx:id="startButton" layoutX="249.0" layoutY="287.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="51.0" prefWidth="105.0" text="Close" />
     </children>
-</Pane>
+</AnchorPane>

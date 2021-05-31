@@ -11,13 +11,19 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.statement.Slf4JSqlLogger;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 import org.tinylog.Logger;
 import stonegames.model.GameModel;
 import stonegames.model.Player;
 
 import stonegames.results.GameResult;
+import stonegames.results.GameResultAbandoned;
+import stonegames.results.GameResultDao;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +51,7 @@ public class GameController {
     static boolean isSuccess = true;
     int oldLocation1;
     int oldLocation2;
-    GameResult gameResult = new GameResult();
+    GameResultAbandoned gameResultAbandoned = new GameResultAbandoned();
 
     public static void setPlayerName(String p) {
         playerName = p;
@@ -56,7 +62,8 @@ public class GameController {
         playerNameMsg.setText(playerName);
         player = new Player();
         player.setPlayerName(playerName);
-        player.setStartTime(new Date());
+        LocalTime startTime = LocalTime.now();
+        player.setStartTime(startTime);
         movedTimes.setText(String.valueOf(countMove));
         for (int i = 0; i < board.getColumnCount(); i++) {
             if (i == 0 || i== 2 || i == 4)
@@ -136,62 +143,92 @@ public class GameController {
         newBall2.setFill(color2);
     }
 
-    public void successProcess(){
-        SavePlayerDataToJson(player,countMove,playerName);
-        List<Player> top10players = null;
-        setScoreBoard(top10players);
+    public void successProcess() {
+        //SavePlayerDataToJson(player,countMove,playerName);
+//        List<Player> top10players = null;
+        //setScoreBoard(top10players);
+//        createGameResult();
+//
+//        Stage stage = new Stage();
+//        try {
+//            stage.setScene(new Scene((Parent) FXMLLoader.load(getClass().getResource("/fxml/result.fxml"))));
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        stage.setTitle("Red and Black stone game");
+//        stage.show();
 
-        Stage stage = new Stage();
         try {
-            stage.setScene(new Scene((Parent) FXMLLoader.load(getClass().getResource("/fxml/result.fxml"))));
+            createGameResult();
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/result.fxml"));
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        stage.setTitle("Red and Black stone game");
-        stage.show();
     }
 
-    public void SavePlayerDataToJson(Player player, int countMove, String playerName) {
-        player.setEndTime(new Date());
+    public void createGameResult() {
+        LocalTime endTime = LocalTime.now();
+        player.setEndTime(endTime);
         player.setCount(countMove);
         player.setScore();
-        try {
-            gameResult.saveData(player);
-        } catch (IOException exc) {
-            // TODO Auto-generated catch block
-            exc.printStackTrace();
-        }
-
-        Logger.info("player" + player);
-        ResultController.setMyScore(playerName + ": Congratulation!! You moved :" + countMove + " times" + " score:" + player.getScore());
-
+        int gameTime = player.getSeconds();
+        int playerScore = player.getScore();
+        Jdbi jdbi = Jdbi.create("jdbc:oracle:thin:@oracle.inf.unideb.hu:1521:ora19c", "U_DDBUA9", "kalvinter");
+        jdbi.installPlugin(new SqlObjectPlugin());
+        jdbi.setSqlLogger(new Slf4JSqlLogger());
+        List<GameResult> gameResults = jdbi.withExtension(GameResultDao.class, dao -> {
+            //dao.createTable();
+            int lastGameID = dao.getLastGameID();
+            dao.insertGameResult(new GameResult(lastGameID + 1, playerName, countMove,gameTime,playerScore));
+            return dao.listGameResults();
+        });
+        gameResults.forEach(System.out::println);
     }
 
-    public void setScoreBoard(List<Player> top10players){
-        try {
-            top10players = gameResult.findTop10Player();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        if (top10players != null) {
-            for (int k = 0; k < 10; k++) {
-                if (k < top10players.size()) {
-                    stringBuilder.append(" Player name :");
-                    stringBuilder.append(top10players.get(k).getPlayerName());
-                    stringBuilder.append(" Time : ");
-                    stringBuilder.append(top10players.get(k).getSeconds());
-                    stringBuilder.append(" Moved times :");
-                    stringBuilder.append(top10players.get(k).getCount());
-                    stringBuilder.append(" Score :");
-                    stringBuilder.append(top10players.get(k).getScore());
-                    stringBuilder.append("\n");
-                }
-            }
-        }
-        Logger.info("top 10:" + stringBuilder);
-        ResultController.setTop10(stringBuilder.toString());
-    }
+//    public void SavePlayerDataToJson(Player player, int countMove, String playerName) {
+//        player.setEndTime(new Date());
+//        player.setCount(countMove);
+//        player.setScore();
+//        try {
+//            gameResultAbandoned.saveData(player);
+//        } catch (IOException exc) {
+//            // TODO Auto-generated catch block
+//            exc.printStackTrace();
+//        }
+//
+//        Logger.info("player" + player);
+//        ResultController.setMyScore(playerName + ": Congratulation!! You moved :" + countMove + " times" + " score:" + player.getScore());
+//
+//    }
+//
+//    public void setScoreBoard(List<Player> top10players){
+//        try {
+//            top10players = gameResultAbandoned.findTop10Player();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//        StringBuilder stringBuilder = new StringBuilder();
+//        if (top10players != null) {
+//            for (int k = 0; k < 10; k++) {
+//                if (k < top10players.size()) {
+//                    stringBuilder.append(" Player name :");
+//                    stringBuilder.append(top10players.get(k).getPlayerName());
+//                    stringBuilder.append(" Time : ");
+//                    stringBuilder.append(top10players.get(k).getSeconds());
+//                    stringBuilder.append(" Moved times :");
+//                    stringBuilder.append(top10players.get(k).getCount());
+//                    stringBuilder.append(" Score :");
+//                    stringBuilder.append(top10players.get(k).getScore());
+//                    stringBuilder.append("\n");
+//                }
+//            }
+//        }
+//        Logger.info("top 10:" + stringBuilder);
+//        ResultController.setTop10(stringBuilder.toString());
+//    }
 
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {

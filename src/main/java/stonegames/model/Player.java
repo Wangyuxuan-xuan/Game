@@ -3,7 +3,9 @@ package stonegames.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.time.Duration;
 import java.util.Date;
+import java.time.LocalTime;
 
 /**
  * A player entity class,
@@ -21,11 +23,11 @@ public class Player {
     /**
      * game start time.
      */
-    private Date startTime;
+    private LocalTime startTime;
     /**
      * game end time.
      */
-    private Date endTime;
+    private LocalTime endTime;
     /**
      * final score.
      */
@@ -51,7 +53,7 @@ public class Player {
      * @return the total game time
      */
     public int getSeconds() {
-        return (int) (endTime.getTime()- startTime.getTime())/1000;
+        return (int) Duration.between(getStartTime(),getEndTime()).getSeconds();
     }
 
     /**
@@ -90,7 +92,7 @@ public class Player {
      * Get the start time of the game,
      * @return startTime.
      */
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
@@ -98,7 +100,7 @@ public class Player {
      * Set the start time of the game,
      * @param startTime startTime.
      */
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
@@ -106,7 +108,7 @@ public class Player {
      * Get the end time of the game,
      * @return end Time.
      */
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
@@ -114,7 +116,7 @@ public class Player {
      * Set the end time of the game,
      * @param endTime end time.
      */
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -126,5 +128,9 @@ public class Player {
     public String toString() {
         Gson gson = new GsonBuilder().create();
         return gson.toJson(this);
+    }
+
+    public static void main(String[] args) {
+
     }
 }
