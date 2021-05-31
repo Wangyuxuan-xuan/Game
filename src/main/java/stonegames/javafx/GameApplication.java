@@ -9,9 +9,6 @@ import org.tinylog.Logger;
 
 public class GameApplication extends Application {
 
-
-
-
     public void start(Stage stage) throws Exception {
         Logger.info("Starting application");
 

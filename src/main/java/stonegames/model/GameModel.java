@@ -27,6 +27,12 @@ public class GameModel {
         }
     }
 
+    /**
+     * Clear the box when two balls are selected
+     *
+     * @param oldLocation1 The position of first ball selected
+     * @param oldLocation2 The position of second ball selected
+     */
     public void setBallsToNone(int oldLocation1, int oldLocation2){
         if(!locationsDontContainBalls(oldLocation1,oldLocation2)){
             oldLocationColor1 = boxes[oldLocation1].getColor();
@@ -36,6 +42,12 @@ public class GameModel {
         }else Logger.debug("empty boxes are clicked");
     }
 
+    /**
+     * Reset the balls to previous boxes
+     *
+     * @param oldLocation1 The position of first ball selected
+     * @param oldLocation2 The position of second ball selected
+     */
     public void resetBallsColor(int oldLocation1, int oldLocation2){
         boxes[oldLocation1].setColor(oldLocationColor1);
         boxes[oldLocation2].setColor(oldLocationColor2);
@@ -67,6 +79,16 @@ public class GameModel {
                 else Logger.debug("Locations already have balls");
             }
         }
+        else Logger.debug("Balls are not neighbour");
+    }
+
+    public boolean canBallsMoved(int oldLocation1,int oldLocation2,int newLocation1,int newLocation2){
+        if (isBallsNeighbour(oldLocation1,oldLocation2) &&
+                isBallsNeighbour(newLocation1,newLocation2) &&
+                locationsDontContainBalls(newLocation1,newLocation2)){
+            return true;
+        }
+        return false;
     }
 
     /**

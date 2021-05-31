@@ -1,10 +1,6 @@
 package stonegames.model;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.time.Duration;
-import java.util.Date;
 import java.time.LocalTime;
 
 /**
@@ -124,11 +120,6 @@ public class Player {
      * Converts the class to JSON data ,
      * @return JSON Data of this object.
      */
-    @Override
-    public String toString() {
-        Gson gson = new GsonBuilder().create();
-        return gson.toJson(this);
-    }
 
     public static void main(String[] args) {
 

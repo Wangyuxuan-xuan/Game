@@ -19,13 +19,11 @@ import stonegames.model.GameModel;
 import stonegames.model.Player;
 
 import stonegames.results.GameResult;
-import stonegames.results.GameResultAbandoned;
 import stonegames.results.GameResultDao;
 
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class GameController {
@@ -51,7 +49,6 @@ public class GameController {
     static boolean isSuccess = true;
     int oldLocation1;
     int oldLocation2;
-    GameResultAbandoned gameResultAbandoned = new GameResultAbandoned();
 
     public static void setPlayerName(String p) {
         playerName = p;
@@ -109,7 +106,7 @@ public class GameController {
             if (clickedButtonsLocations.size() == 3) {
                 var desiredLocation1 = clickedButtonsLocations.get(2);
                 var desiredLocation2 = clickedButtonsLocations.get(2) + 1;
-                if (model.locationsDontContainBalls(desiredLocation1, desiredLocation2) && model.isBallsNeighbour(desiredLocation1, desiredLocation2)) {
+                if (model.canBallsMoved(oldLocation1,oldLocation2,desiredLocation1,desiredLocation2)) {
                     model.setBallsLocation(oldLocation1, oldLocation2, desiredLocation1, desiredLocation2);
                     Logger.debug("New locations for the balls have been set");
 
@@ -144,20 +141,6 @@ public class GameController {
     }
 
     public void successProcess() {
-        //SavePlayerDataToJson(player,countMove,playerName);
-//        List<Player> top10players = null;
-        //setScoreBoard(top10players);
-//        createGameResult();
-//
-//        Stage stage = new Stage();
-//        try {
-//            stage.setScene(new Scene((Parent) FXMLLoader.load(getClass().getResource("/fxml/result.fxml"))));
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//        stage.setTitle("Red and Black stone game");
-//        stage.show();
-
         try {
             createGameResult();
             Stage stage = new Stage();
@@ -187,48 +170,6 @@ public class GameController {
         });
         gameResults.forEach(System.out::println);
     }
-
-//    public void SavePlayerDataToJson(Player player, int countMove, String playerName) {
-//        player.setEndTime(new Date());
-//        player.setCount(countMove);
-//        player.setScore();
-//        try {
-//            gameResultAbandoned.saveData(player);
-//        } catch (IOException exc) {
-//            // TODO Auto-generated catch block
-//            exc.printStackTrace();
-//        }
-//
-//        Logger.info("player" + player);
-//        ResultController.setMyScore(playerName + ": Congratulation!! You moved :" + countMove + " times" + " score:" + player.getScore());
-//
-//    }
-//
-//    public void setScoreBoard(List<Player> top10players){
-//        try {
-//            top10players = gameResultAbandoned.findTop10Player();
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//        StringBuilder stringBuilder = new StringBuilder();
-//        if (top10players != null) {
-//            for (int k = 0; k < 10; k++) {
-//                if (k < top10players.size()) {
-//                    stringBuilder.append(" Player name :");
-//                    stringBuilder.append(top10players.get(k).getPlayerName());
-//                    stringBuilder.append(" Time : ");
-//                    stringBuilder.append(top10players.get(k).getSeconds());
-//                    stringBuilder.append(" Moved times :");
-//                    stringBuilder.append(top10players.get(k).getCount());
-//                    stringBuilder.append(" Score :");
-//                    stringBuilder.append(top10players.get(k).getScore());
-//                    stringBuilder.append("\n");
-//                }
-//            }
-//        }
-//        Logger.info("top 10:" + stringBuilder);
-//        ResultController.setTop10(stringBuilder.toString());
-//    }
 
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {

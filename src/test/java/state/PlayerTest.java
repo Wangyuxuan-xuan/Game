@@ -3,6 +3,9 @@ package state;
 import org.junit.jupiter.api.Test;
 import stonegames.model.Player;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,26 +13,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
 
-//    @Test
-//    public void testPlayer() throws InterruptedException {
-//        Player player=new Player();
-//        Date date1=new Date();
-//        player.setStartTime(date1);
-//        player.setPlayerName("playertest");
-//        player.setCount(100);
-//        Thread.sleep(5000);
-//        Date date2=new Date();
-//        player.setEndTime(date2);
-//        player.setScore();
-//
-//
-//        assertNotNull(player);
-//        assertTrue("playertest".equals(player.getPlayerName()));
-//        assertTrue(100==player.getCount());
-//        assertTrue(date1.equals(player.getStartTime()));
-//        assertTrue(date2.equals(player.getEndTime()));
-//        assertTrue(1000000/((int)(((date2.getTime()-date1.getTime())/1000)*100+100))==player.getScore());
-//    }
+    @Test
+    public void testPlayer() {
+        Player player=new Player();
+        LocalTime startTime = LocalTime.of(14,40);
+        player.setStartTime(startTime);
+        player.setPlayerName("playertest");
+        player.setCount(100);
+        LocalTime endTime = LocalTime.of(14,41);
+        player.setEndTime(endTime);
+        player.setScore();
+
+
+        assertNotNull(player);
+        assertTrue("playertest".equals(player.getPlayerName()));
+        assertTrue(100==player.getCount());
+        assertTrue(startTime.equals(player.getStartTime()));
+        assertTrue(endTime.equals(player.getEndTime()));
+        assertTrue(1000000/((int)((Duration.between(startTime,endTime).getSeconds())*100+100))==player.getScore());
+    }
 
 
 }

@@ -1,12 +1,43 @@
 package state;
 
 import org.junit.jupiter.api.Test;
+import stonegames.model.BallColor;
 import stonegames.model.GameModel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameModelTest {
 
+    @Test
+    public void testSetBallsToNone(){
+        GameModel gameModel = new GameModel();
+        gameModel.setBallsToNone(0,1);
+        assertTrue(gameModel.boxes[0].getColor() == BallColor.NONE);
+        assertTrue(gameModel.boxes[1].getColor() == BallColor.NONE);
+        gameModel.setBallsToNone(2,3);
+        assertTrue(gameModel.boxes[0].getColor() == BallColor.NONE);
+        assertTrue(gameModel.boxes[0].getColor() == BallColor.NONE);
+        gameModel.setBallsToNone(4,5);
+        assertTrue(gameModel.boxes[0].getColor() == BallColor.NONE);
+        assertTrue(gameModel.boxes[0].getColor() == BallColor.NONE);
+    }
+
+    @Test
+    public void testResetBallsColor(){
+        GameModel gameModel = new GameModel();
+        gameModel.setBallsToNone(0,1);
+        gameModel.resetBallsColor(0,1);
+        assertTrue(gameModel.boxes[0].getColor() == BallColor.RED);
+        assertTrue(gameModel.boxes[1].getColor() == BallColor.BLACK);
+        gameModel.setBallsToNone(2,3);
+        gameModel.resetBallsColor(2,3);
+        assertTrue(gameModel.boxes[2].getColor() == BallColor.RED);
+        assertTrue(gameModel.boxes[3].getColor() == BallColor.BLACK);
+        gameModel.setBallsToNone(4,5);
+        gameModel.resetBallsColor(4,5);
+        assertTrue(gameModel.boxes[4].getColor() == BallColor.RED);
+        assertTrue(gameModel.boxes[5].getColor() == BallColor.BLACK);
+    }
     @Test
     public void testSetBallsLocation(){
         GameModel gameModel = new GameModel();
@@ -19,6 +50,17 @@ public class GameModelTest {
 
     }
 
+    @Test
+    public void testCanBallsMoved(){
+        GameModel gameModel = new GameModel();
+
+        assertTrue(gameModel.canBallsMoved(1,2,3,4) == false);
+        assertTrue(gameModel.canBallsMoved(1,2,14,15) == true);
+        assertTrue(gameModel.canBallsMoved(4,5,3,4) == false);
+        assertTrue(gameModel.canBallsMoved(2,3,5,6) == false);
+        assertTrue(gameModel.canBallsMoved(2,3,8,9) == true);
+
+    }
     @Test
     public void testIsBallsNeighbour(){
         GameModel gameModel = new GameModel();

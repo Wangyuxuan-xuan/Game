@@ -41,9 +41,6 @@ public interface GameResultDao {
     @SqlUpdate("INSERT INTO gameresult VALUES (:id,:playerName, :stepsByPlayer, :gameTime, :playerScore)")
     void insertGameResult(@BindBean GameResult gameResult);
 
-
-
-
     /**
      * Return all the game results from the database
      * @return list of all game results
@@ -52,8 +49,8 @@ public interface GameResultDao {
     List<GameResult> listGameResults();
 
     /**
-     * Return top 5 winner's names and number of wins
-     * @return top 5 winner's names and number of wins
+     * Return top 10 player's data
+     * @return top 10 player's data
      */
     @SqlQuery("select * from (select playername , stepsbyplayer , gametime , playerscore from gameresult order by playerscore DESC) where rownum <= 10")
     List<GameResult> listTop10Results();

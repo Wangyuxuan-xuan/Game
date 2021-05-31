@@ -61,6 +61,4 @@ public class ResultController {
         Logger.info("Game Over!");
         System.exit(0);
     }
-
-
 }
