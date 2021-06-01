@@ -112,6 +112,12 @@
             <artifactId>jdbi3-sqlobject</artifactId>
             <version>3.19.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11 -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <version>21.1.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
